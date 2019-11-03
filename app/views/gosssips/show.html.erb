@@ -1,0 +1,121 @@
+<!-- Masthead -->
+<header class="masthead bg-primary text-white text-center">
+	<div class="container d-flex align-items-center flex-column">
+		<!-- Masthead Heading -->
+		<h1 class="masthead-heading text-uppercase mb-0"> Fiche du Gossip</h1>
+	</div>
+</header>
+<!-- Portfolio Section -->
+<section class="page-section portfolio" id="portfolio">
+	<div class="container">
+		<!-- Portfolio Section Heading -->
+		<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Gossip :  <%= "#{@gossip.title}" %> </p></h2>
+		<!-- Icon Divider -->
+		<div class="divider-custom">
+		        <div class="divider-custom-line"></div>
+	        <div class="divider-custom-icon">
+        		<i class="fas fa-star"></i>
+	        </div>
+        		<div class="divider-custom-line"></div>
+      </div>
+
+
+	<div class="jumbotron">
+		<p class="lead"><%= @gossip.content %></p>
+		<hr class="my-4">
+			<p>Ce gossip a ete ecrit par <%= @gossip.user.first_name %>, qui vit a <%= @gossip.user.city.name %> et la cree le <%= @gossip.created_at %> </p>
+			<p> Tags associes : 
+			<% @gossip.tags.each do |tag|%>
+				<%=tag.title%> 
+			<%end %>
+			</p>
+			<a class="btn btn-primary btn-lg" href="<%= user_path(@gossip.user.id) %>" role="button">Afficher la page de l'auteur</a>
+			<a class="btn btn-primary btn-lg" href="<%= city_path(@gossip.user.city.id) %>" role="button">Afficher la page de la ville de l'auteur</a>
+			<% if current_user.id == @gossip.user.id %>
+				<a class="btn btn-secondary btn-lg" href="<%= edit_gosssip_path(@gossip.id) %>" role="button">Modifier le gossip</a>
+	   			<a class="btn btn-danger btn-lg" href="<%= gosssip_path(@gossip.id) %>" role="button" data-confirm="Attention la suppression est irreversible" data-method="DELETE">Supprimer le gossip</a>
+			<%end%>
+
+			<% if @like.empty? %>
+				<%= form_for :like, url: gosssip_likes_path(@gossip) do |f| %>
+					<button class="btn br3 bg-orange9 ph4 pv3 lh0 bt bl bw2 b--black-20 white tc">  <i class="fas fa-heart"></i> Like</i> </button>
+				<%end%>
+			<%else%>
+				<a class="btn br3 bg-orange9 ph4 pv3 lh0 bt bl bw2 b--black-20 white tc" href="<%= gosssip_like_path(@gossip.id) %>" role="button" data-method="DELETE">Supprimer le gossip</a>
+			<%end%>
+
+		</hr>
+	</div>
+
+<div class="container">
+		<!-- Portfolio Section Heading -->
+		<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0"> Comments :  <%= "#{@gossip.comments.count} comments" %> </p></h2>
+	<div class="divider-custom">
+		        <div class="divider-custom-line"></div>
+	        <div class="divider-custom-icon">
+        		<i class="fas fa-star"></i>
+	        </div>
+        		<div class="divider-custom-line"></div>
+      </div>
+	  
+<% if @comment.errors.any? %>
+        <div class="alert alert-danger">
+        <% @comment.errors.full_messages.each do |message| %>
+
+                <%="#{message}." %>
+
+        <%end%>
+        </div>
+<%end%>
+
+
+		<%= form_for :comment, url: comments_path do |f| %>
+
+				<div class="control-group">
+                   	<div class="form-group floating-label-form-group controls">
+						<%= f.label :content, "Comment" , class: 'col-md-4 control-label'%>
+                        <%= f.text_field :content, class:'form-control' %>
+
+						<p class="help-block text-danger"></p>
+						<%= hidden_field_tag(:gossip, @gossip.id) %>
+
+	           		 </div>
+				</div>
+			
+				<div id="success"></div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary" id="sendMessageButton">Add a comment</button>
+					</div>
+				<%end%>
+
+
+  <!-- Cards Gossips -->
+     	<table class="table">
+		 	<thead> 
+				<tr>
+					<th class= "" >  Commentaires</th>
+					<th class= "" >  </th>
+					<th class= "" >  </th>
+
+				</tr>
+			</thead>
+				<tbody>
+					
+					 <% @comments.each do |comment| %>
+					<tr>
+					<td>
+						<p class="lead"><%= comment.content %></p>
+					</td>
+					<td>
+						<p> Ecrit par <%= comment.user.first_name %></p> 
+					</td>
+					<td> 
+					<% if current_user.id == comment.user.id %>
+						<a class="btn btn-primary btn-sm" href="<%= edit_comment_path(comment.id) %>" role="button">Modifier le commentaire</a> </td>
+					<%end%>
+					</tr>
+					<%end %>
+				</tbody>
+		</table>
+	
+</section>

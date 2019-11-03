@@ -1,0 +1,44 @@
+<!-- Masthead -->
+<header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+                <!-- Masthead Heading -->
+                <h1 class="masthead-heading text-uppercase mb-0"> Creer un Gossip</h1>
+        </div>
+</header>
+
+<% if @gossip.errors.any? %>
+        <div class="alert alert-danger">
+        <% @gossip.errors.full_messages.each do |message| %>
+
+                <%="#{message}." %>
+
+        <%end%>
+        </div>
+<%end%>
+
+<div class="container mt-5">
+
+        <%= form_for @gossip do |f| %>
+        
+		<div class="form-group">
+                        <label> Titre de l'article </label>
+                        <%= f.text_field :title, class: 'form-control' %>
+                </div>
+                <div class="form-group">
+                        <label> Contenu du Gossip </label>
+                        <%= f.text_area :content, class: 'form-control' %>
+                </div>
+		<div class="input-group m-3 ">
+			<label> Selectionner un ou plusieurs tags : </label>
+	            <%= select_tag "tag_ids", options_from_collection_for_select(Tag.order(:title), "id", "title"), multiple: true, class: 'ml-5' %>
+
+		</div>
+		<div class="form-group">
+                       	<button type="submit" class= "btn btn-primary"> Ajouter mon Gossip </button>
+                </div>
+
+		</div>
+        <%end%>
+</div>
+
+

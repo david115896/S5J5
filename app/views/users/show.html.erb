@@ -1,0 +1,61 @@
+<!-- Masthead -->
+<header class="masthead bg-primary text-white text-center">
+	<div class="container d-flex align-items-center flex-column">
+		<!-- Masthead Heading -->
+		<h1 class="masthead-heading text-uppercase mb-0"> Fiche auteur</h1>
+	</div>
+</header>
+
+<!-- Portfolio Section -->
+<section class="page-section portfolio" id="portfolio">
+	<div class="container">
+		<!-- Portfolio Section Heading -->
+		<h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Auteur :  <%= "#{@user.first_name}" %> </p></h2>
+		<!-- Icon Divider -->
+		<div class="divider-custom">
+			<div class="divider-custom-line"></div>
+		<div class="divider-custom-icon">
+        		<i class="fas fa-star"></i>
+		</div>
+			<div class="divider-custom-line"></div>
+		</div>
+
+
+	
+	
+		<div class="row">
+			<div class="col-8">
+				<div class="row">
+				        <% @gossips_user.each do |gossip| %>
+		     			 <div class="card m-2" style="width: 16rem;">
+			    			<div class="card-body">
+				  			 	<h5 class="card-title"> <%= gossip.title %></h5>
+  				  				<h6 class="card-subtitle mb-2 text-muted">Auteur : <%= gossip.user.first_name %></h6>
+              					<h6 class="card-subtitle mb-2 text-muted"> <%= "#{gossip.comments.count} commentaires / " %> <%= "#{gossip.likes.count} " %> <i class="fas fa-heart"></i>  </h6>
+             					 <% if !@gossips_likes.include?(gossip.id) %>
+                					<%= form_for :like, url: gosssip_likes_path(gossip) do |f| %>
+				        			<button class="">  <i class="fas fa-heart"></i> Like</i> </button>
+				       				 <%end%> 
+             					 <%end%>
+            				  <%= link_to "Afficher le detail du gossip", gosssip_path(gossip.id) %>
+			     			</div>
+  		   				 </div>
+	    				  <% end %>
+			      </div>
+			</div>
+  			<div class="col-4">
+		      		<div class="jumbotron">
+					<img class="masthead-avatar mb-5" src="/images/avatar.svg" alt="">
+					<p class="lead"><%= "#{@user.first_name} #{@user.last_name}, #{@user.age} ans, a #{@user.city.name}" %></p>
+			                <hr class="my-4">
+        	        	        	<p> <%= @user.description %></p>
+	                	        	
+					</hr>
+	                                <hr class="my-4">
+					<p> Contact <%= @user.email %> </p>
+					</hr>
+				</div>
+			</div>
+		</div>
+</section>
+

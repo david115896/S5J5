@@ -1,0 +1,2 @@
+module GosssipsHelper
+end

@@ -1,3 +1,25 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+	
+  resources :likes
+	root to: 'users#new'
+	
+	resources :contacts, only: [:new, :create]
+
+	resources :team, only: [:index]
+
+	resources :gosssips do
+		resources :likes, only: [:create, :destroy]
+	end
+
+	resources :users
+
+	resources :cities
+
+	resources :tags, only: [:new, :create, :destroy]
+
+	resources :comments, except: [:new, :index, :show]
+	
+	resources :sessions, only: [:new, :create, :destroy]
+
+
 end

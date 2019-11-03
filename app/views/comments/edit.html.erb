@@ -1,0 +1,35 @@
+<!-- Masthead -->
+<header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+                <!-- Masthead Heading -->
+                <h1 class="masthead-heading text-uppercase mb-0"> Editer mon commentaire</h1>
+        </div>
+</header>
+
+<% if @comment.errors.any? %>
+        <div class="alert alert-danger">
+        <% @comment.errors.full_messages.each do |message| %>
+
+                <%="#{message}." %>
+
+        <%end%>
+        </div>
+<%end%>
+
+<div class="container mt-5">
+        <%= form_for @comment do |f| %>
+                <div class="form-group">
+                <label> Contenu du commentaire </label>
+                <%= f.text_area :content, class: 'form-control' %>
+        </div>
+	<div class="form-group">
+                <button type="submit" class= "btn btn-primary"> Modifier mon commentaire </button>
+                <a class="btn btn-danger btn-sm" href="<%= comment_path(@comment.id) %>" role="button" data-confirm="Attention la suppression est irreversible" data-method="DELETE">Supprimer le commentaire</a>
+
+        </div>
+        
+        <%end%>
+</div>
+
+
+

@@ -1,0 +1,37 @@
+<div class="body-blue">
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Log In</h5>
+            
+            <%= form_for :user, url: sessions_path do |f|%>
+
+            <form class="form-signin">      
+                <%= f.label :email, "Email address" %>
+                <div class="form-label-group">
+                    <%= f.text_field :email, class:'form-control' %>
+                   
+                </div>
+                <%= f.label :password, "Password" %>
+              <div class="form-label-group">
+                 <%= f.password_field :password, class:'form-control' %>
+                
+              </div>
+
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+
+               <%end %>
+
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</div>
